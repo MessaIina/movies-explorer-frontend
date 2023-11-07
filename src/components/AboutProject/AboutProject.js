@@ -1,7 +1,7 @@
 import React from "react";
 import "./AboutProject.css";
 
-const Project = () => {
+const AboutProject = () => {
   return (
     <section className="about-project">
       <h1 className="title">О проекте</h1>
@@ -35,4 +35,4 @@ const Project = () => {
   );
 };
 
-export default Project;
+export default AboutProject;
