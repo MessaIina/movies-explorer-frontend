@@ -1,0 +1,110 @@
+.about-project {
+    color: #000;
+    padding: 110px 70px 95px;
+  }
+  .about-project__runtime {
+    justify-content: space-between;
+    display: flex;
+    margin: 70px 0 0;
+    padding: 0;
+    gap: 30px;
+    list-style-type: none;
+  }
+  .about-project__runtime-item {
+    max-width: 550px;
+  }
+  .about-project__runtime-title {
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 400;
+    letter-spacing: -0.8px;
+  }
+  .about-project__runtime-text {
+    padding: 0;
+    margin: 26px 0 0;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .about-project__runtime-scheme {
+    display: grid;
+    margin-top: 110px;
+    text-align: center;
+    grid-template-columns: 228px auto;
+  }
+  .about-project__runtime-scheme-item {
+    margin: 0;
+    padding: 9px 0;
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 400;
+  }
+  .about-project__runtime-scheme-item:first-child {
+    background-color: #2be080;
+  }
+  .about-project__runtime-scheme-item:nth-child(2) {
+    background-color: #f2f2f2;
+  }
+  .about-project__runtime-scheme-item:nth-child(3),
+  .about-project__runtime-scheme-item:nth-child(4) {
+    color: #a0a0a0;
+    padding: 15px 0;
+    font-weight: 500;
+  }
+  
+  @media screen and (max-width: 1024px) {
+    .about-project {
+      padding: 90px 50px 77px;
+    }
+    .about-project__runtime-item {
+      max-width: 320px;
+    }
+    .about-project__runtime-text {
+      margin: 22px 0 0;
+      font-size: 12px;
+      line-height: 18px;
+    }
+    .about-project__runtime-scheme {
+      margin-top: 93px;
+      grid-template-columns: 140px auto;
+    }
+    .about-project__runtime-scheme-item:nth-child(3),
+    .about-project__runtime-scheme-item:nth-child(4) {
+      padding: 14px 0;
+      font-weight: 400;
+    }
+  }
+  
+  @media screen and (max-width: 540px) {
+    .about-project {
+      padding: 70px 18px;
+    }
+    .about-project__runtime {
+      flex-direction: column;
+      margin-top: 61px;
+      gap: 56px;
+    }
+    .about-project__runtime-title {
+      font-size: 18px;
+      line-height: 22px;
+    }
+    .about-project__runtime-text {
+      margin-top: 16px;
+      font-size: 11px;
+      line-height: 16px;
+    }
+    .about-project__runtime-scheme {
+      margin-top: 60px;
+      grid-template-columns: 100px auto;
+    }
+    .about-project__runtime-scheme-item {
+      font-size: 11px;
+      line-height: 13px;
+      padding: 11px 0;
+    }
+    .about-project__runtime-scheme-item:nth-child(3),
+    .about-project__runtime-scheme-item:nth-child(4) {
+      padding: 10px 0;
+    }
+  }

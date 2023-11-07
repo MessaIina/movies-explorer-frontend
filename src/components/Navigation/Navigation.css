@@ -1,0 +1,24 @@
+.navbar {
+    margin: 0 auto;
+  }
+  .navbar__links {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  .navbar__link {
+    padding: 0;
+    margin: 0;
+    font-size: 13px;
+    line-height: 18px;
+    color: #000;
+  }
+  .navbar__link_dark {
+    color: #fff;
+  }
+  .navbar__link_active {
+    font-weight: 500;
+  }

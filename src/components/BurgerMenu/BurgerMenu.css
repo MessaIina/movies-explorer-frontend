@@ -1,0 +1,74 @@
+.burger {
+    grid-area: links;
+    z-index: 2;
+    display: flex;
+    justify-content: end;
+  }
+  
+  .burger__btn {
+    width: 28px;
+    height: 24px;
+    margin-right: 8px;
+    background-color: transparent;
+    position: relative;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+  .burger__btn:before {
+    width: 28px;
+    height: 3px;
+    background-color: #000;
+    content: "";
+    position: absolute;
+    top: 1px;
+    right: 0;
+  }
+  .burger__line {
+    width: 28px;
+    height: 3px;
+    background-color: #000;
+    position: absolute;
+    right: 0;
+    top: 11px;
+  }
+  .burger__btn:after {
+    width: 28px;
+    height: 3px;
+    background-color: #000;
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 21px;
+  }
+  .burger__btn_light:before {
+    background-color: #fff;
+  }
+  .burger__btn_light:after {
+    background-color: #fff;
+  }
+  .burger__line_light {
+    background-color: #fff;
+  }
+  
+  @media screen and (max-width: 540px) {
+    .burger__btn {
+      width: 24px;
+      margin-right: 9px;
+    }
+    .burger__btn:before {
+      width: 22px;
+      height: 2.5px;
+      top: 2px;
+    }
+    .burger__line {
+      width: 22px;
+      height: 2.5px;
+      top: 11px;
+    }
+    .burger__btn:after {
+      width: 22px;
+      height: 2.5px;
+      top: 20px;
+    }
+  }
