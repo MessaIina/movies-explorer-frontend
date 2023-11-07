@@ -3,18 +3,20 @@ import { Link } from "react-router-dom";
 import "./MoviesCard.css";
 
 const MoviesCard = ({ film }) => {
+  const isMobile = window.matchMedia("(min-width: 540px)").matches;
 
   const convertDuration = duration =>
     (Math.floor(duration / 60) && Math.floor(duration / 60) + "ч ") +
     (duration % 60) +
     "м";
 
+  const savedFilmsRoute = window.location.href.includes("saved-movies");
   const toggleLike = e => {
     e.target.classList.toggle("movie__like_active");
   };
   return (
     <li className="movie" key={film.movieId}>
-      <Link className="btn" to={film.trailerLink} target="_blank">
+      <Link className="button" to={film.trailerLink} target="_blank">
         <img
           className="movie__thumbnail"
           src={film.thumbnail}
@@ -25,7 +27,13 @@ const MoviesCard = ({ film }) => {
         <h2 className="movie__name">{film.nameRU}</h2>
         <button
           onClick={toggleLike}
-          className="movie__delete movie__delete_active btn movie__delete btn movie__like btn"
+          className={
+            savedFilmsRoute
+              ? isMobile
+                ? "movie__delete movie__delete_active btn"
+                : "movie__delete btn"
+              : "movie__like btn"
+          }
           type="button"
           aria-label="Лайк\дизлайк"
         />
