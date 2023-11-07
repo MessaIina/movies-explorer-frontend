@@ -21,7 +21,7 @@ const Profile = ({ handleEditProfile, onLogOut }) => {
       <Header />
       <main>
         <section className="profile">
-          <h2 className="profile__title">Привет, {currentUser.name}!</h2>
+          <h1 className="profile__title">Привет, {currentUser.name}!</h1>
           <form
             className="profile__form"
             name="register"

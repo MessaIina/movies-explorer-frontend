@@ -58,6 +58,7 @@
     .landing__info {
       margin: 43px 0 98px;
       text-align: center;
+      order: 10;
     }
     .landing__title {
       max-width: 680px;
@@ -75,7 +76,7 @@
     .landing {
       padding: 70px 10px 40px;
     }
-    .landing__img {
+    .landing__image {
       width: 206px;
       height: 210px;
     }
@@ -86,5 +87,6 @@
     }
     .landing__info {
       margin: 40px 0 89px;
+      order: 10;
     }
   }
