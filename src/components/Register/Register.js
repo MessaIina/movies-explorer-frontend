@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { MainContext } from "../../contexts/MainContext";
 import { useFormAndValidation } from "../../hooks/useFormAndValidation";
 import LogoIcon from "../../images/logo.svg";
 import "./Register.css";
 
 const Register = ({ handleRegister }) => {
+  const { errorMessage } = useContext(MainContext);
+
   const { values, handleChange, errors, isValid, resetForm } =
     useFormAndValidation();
 
@@ -36,6 +39,7 @@ const Register = ({ handleRegister }) => {
           <label className="auth__field">
             Имя
             <input
+              pattern="^[a-zA-zа-яА-ЯёЁ\-\s]+"
               id="reg-name-input"
               minLength="2"
               maxLength="30"
@@ -96,8 +100,14 @@ const Register = ({ handleRegister }) => {
               {errors.password}
             </span>
           </label>
-          <p className="auth__submit-error auth__submit-error_register">
-            Пользователь с таким email уже существует.
+          <p
+            className={`${
+              errorMessage
+                ? "auth__submit-error auth__submit-error_register auth__submit-error_active"
+                : "auth__submit-error auth__submit-error_register"
+            }`}
+          >
+            {errorMessage}
           </p>
           <button
             disabled={!isValid}

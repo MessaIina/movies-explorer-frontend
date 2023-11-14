@@ -1,18 +1,28 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { MainContext } from "../../contexts/MainContext";
 import { useFormAndValidation } from "../../hooks/useFormAndValidation";
 import Header from "../Header/Header";
 import "./Profile.css";
 
-const Profile = ({ handleEditProfile, onLogOut }) => {
+const Profile = ({ handleUpdateUser, onSignOut }) => {
   const currentUser = useContext(CurrentUserContext);
-  const { values, handleChange, errors, isValid } = useFormAndValidation();
+  const { errorMessage } = useContext(MainContext);
+  const { values, handleChange, errors, isValid, setValues, resetForm } =
+    useFormAndValidation();
   const { name, email } = values;
+
+  useEffect(() => {
+    setValues({
+      name: currentUser.name,
+      email: currentUser.email,
+    });
+  }, [currentUser]);
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (isValid) {
-      handleEditProfile(values);
+    if (isValid && (currentUser.name !== name || currentUser.email !== email)) {
+      handleUpdateUser(values, resetForm);
     }
   };
 
@@ -21,7 +31,7 @@ const Profile = ({ handleEditProfile, onLogOut }) => {
       <Header />
       <main>
         <section className="profile">
-          <h1 className="profile__title">Привет, {currentUser.name}!</h1>
+          <h2 className="profile__title">Привет, {currentUser.name}!</h2>
           <form
             className="profile__form"
             name="register"
@@ -31,8 +41,9 @@ const Profile = ({ handleEditProfile, onLogOut }) => {
             <div className="profile__field">
               <label className="profile__label">Имя</label>
               <input
+                pattern="^[a-zA-zа-яА-ЯёЁ\-\s]+"
                 id="profile-name-input"
-                placeholder="Имя"
+                placeholder="Введите имя"
                 minLength="2"
                 maxLength="30"
                 type="text"
@@ -55,7 +66,7 @@ const Profile = ({ handleEditProfile, onLogOut }) => {
               <input
                 pattern="[^@\s]+@[^@\s]+\.[^@\s]+"
                 id="profile-email-input"
-                placeholder="E-mail"
+                placeholder="Введите почту"
                 type="email"
                 name="email"
                 className="profile__input"
@@ -71,23 +82,40 @@ const Profile = ({ handleEditProfile, onLogOut }) => {
                 {errors.email}
               </span>
             </div>
+            <p
+              className={`${
+                errorMessage
+                  ? "profile__edit-error profile__edit-error_active"
+                  : "profile__edit-error"
+              }`}
+            >
+              {errorMessage}
+            </p>
+            <ul className="profile__links">
+              <li className="profile__link">
+                <button
+                  disabled={
+                    !isValid ||
+                    (currentUser.name === name && currentUser.email === email)
+                  }
+                  type="submit"
+                  aria-label="Редактировать профиль"
+                  className="profile__edit btn"
+                >
+                  Редактировать
+                </button>
+              </li>
+              <li className="profile__link">
+                <button
+                  onClick={onSignOut}
+                  className="profile__logout btn"
+                  type="button"
+                >
+                  Выйти из аккаунта
+                </button>
+              </li>
+            </ul>
           </form>
-          <ul className="profile__links">
-            <li className="profile__link">
-              <button
-                type="submit"
-                aria-label="Редактировать профиль"
-                className="profile__edit btn"
-              >
-                Редактировать
-              </button>
-            </li>
-            <li className="profile__link">
-              <button onClick={onLogOut} className="profile__logout link" type="btn">
-                Выйти из аккаунта
-              </button>
-            </li>
-          </ul>
         </section>
       </main>
     </>

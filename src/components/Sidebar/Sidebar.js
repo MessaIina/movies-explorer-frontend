@@ -12,7 +12,7 @@ const Sidebar = ({ sidebarIsActive, onSetSideBarIsActive }) => {
         <div className="sidebar__opacity"></div>
         <div className="sidebar__content">
           <button
-            type="btn"
+            type="button"
             className="sidebar__close"
             onClick={onSetSideBarIsActive}
           ></button>

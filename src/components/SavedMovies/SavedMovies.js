@@ -1,21 +1,39 @@
-import React from "react";
-import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
+import React, { useContext } from "react";
+import { MainContext } from "../../contexts/MainContext";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import "../Movies/Movies.css";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
+import Preloader from "../Preloader/Preloader";
 import SearchForm from "../SearchForm/SearchForm";
 
-const SavedMovies = () => {
+const SavedMovies = ({
+  handleSearchingMovieName,
+  handleSearchingSavedMovieName,
+  handleDeleteSavedMovie,
+  handleSavedCheckboxIsActive,
+  handleResetFilteredSavedMovies,
+}) => {
+  const { isLoading } = useContext(MainContext);
+
   return (
     <>
       <Header />
-      <main>
+      <main className="main">
         <section className="movies">
-          <SearchForm />
-          <FilterCheckbox />
-          <MoviesCardList />
-          <div className="movies__more-placeholder"></div>
+          <SearchForm
+            handleSearchingMovieName={handleSearchingMovieName}
+            handleSearchingSavedMovieName={handleSearchingSavedMovieName}
+            handleSavedCheckboxIsActive={handleSavedCheckboxIsActive}
+          />
+          {isLoading ? (
+            <Preloader />
+          ) : (
+            <MoviesCardList
+              handleDeleteSavedMovie={handleDeleteSavedMovie}
+              handleResetFilteredSavedMovies={handleResetFilteredSavedMovies}
+            />
+          )}
         </section>
       </main>
       <Footer />
