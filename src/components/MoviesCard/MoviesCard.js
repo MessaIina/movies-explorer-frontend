@@ -16,7 +16,7 @@ const MoviesCard = ({ film }) => {
   };
   return (
     <li className="movie" key={film.movieId}>
-      <Link className="button" to={film.trailerLink} target="_blank">
+      <Link className="btn" to={film.trailerLink} target="_blank">
         <img
           className="movie__thumbnail"
           src={film.thumbnail}
