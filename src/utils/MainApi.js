@@ -14,7 +14,7 @@ export const registerUser = ({ email, password, name }) => {
   }).then(handleRequest);
 };
 
-export const authorizeUser = ({ email, password }) => {
+export const authUser = ({ email, password }) => {
   return fetch("https://api.movies.msl.nomoredomainsrocks.ru/signin", {
     method: "POST",
     headers: {

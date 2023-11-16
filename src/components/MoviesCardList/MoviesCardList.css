@@ -1,52 +1,81 @@
 .movies-list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    margin: 70px 0 0;
-    padding: 0;
-    list-style-type: none;
-    gap: 38px 20px;
+  margin: 70px 0 0;
+  padding: 0;
+  list-style-type: none;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 38px 20px;
+}
+.empty-list {
+  margin: 100px 0;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  line-height: 34px;
+  color: #a0a0a0;
+}
+.empty-list_type_error {
+  color: #ff0000;
+}
+.show-more-btn {
+  display: block;
+  margin: 0 auto;
+  padding: 0;
+  margin-top: 60px;
+  font-size: 12px;
+  line-height: 14.5px;
+  font-weight: 500;
+  width: 320px;
+  height: 36px;
+  background-color: #f9f9f9;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+}
+
+.show-more-placeholder {
+  margin-top: 160px;
+}
+
+@media screen and (max-width: 1279px) {
+  .movies-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .movies-list {
+    margin-top: 74px;
+  }
+  .movies-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
   }
   .empty-list {
-    margin: 100px 0;
-    padding: 0;
-    display: flex;
-    font-size: 20px;
-    line-height: 34px;
-    justify-content: center;
-    align-items: center;
-    color: #a0a0a0;
+    font-size: 18px;
+    line-height: 24px;
   }
-  
-  @media screen and (max-width: 1279px) {
-    .movies-list {
-      grid-template-columns: repeat(3, 1fr);
-    }
+  .show-more-placeholder {
+    margin-top: 70px;
   }
-  
-  @media screen and (max-width: 920px) {
-    .movies-list {
-      margin-top: 74px;
-    }
-    .movies-list {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 30px;
-    }
-    .empty-list {
-      font-size: 18px;
-      line-height: 24px;
-    }
+}
+
+@media screen and (max-width: 767px) {
+  .movies-list {
+    gap: 25px 10px;
   }
-  
-  @media screen and (max-width: 767px) {
-    .movies-list {
-      gap: 25px 10px;
-    }
+}
+
+@media screen and (max-width: 540px) {
+  .movies-list {
+    margin: 40px 0 60px;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 34px;
   }
-  
-  @media screen and (max-width: 540px) {
-    .movies-list {
-      grid-template-columns: repeat(1, 1fr);
-      margin: 40px 0 60px;
-      gap: 34px;
-    }
+  .show-more-btn {
+    width: 240px;
   }
+}

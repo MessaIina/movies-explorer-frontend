@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { MainContext } from "../../contexts/MainContext";
-import { useAdaptiveRender } from "../../hooks/useAdaptiveRender";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import "./MoviesCardList.css";
 
@@ -13,23 +12,32 @@ const MoviesCardList = ({
 }) => {
   const { savedMovies, filteredMovies, filteredSavedMovies, errorMessage } =
     useContext(MainContext);
-  const { isWideDesktop, isDesktop, isTablet, isMobile } = useAdaptiveRender();
+
+  const [isWideDesktop, setWideDesktop] = useState(window.innerWidth >= 1280);
+  const [isDesktop, setDesktop] = useState(window.innerWidth > 1024);
+  const [isWideTablet, setWideTablet] = useState(window.innerWidth >= 768);
+  const [isTablet, setTablet] = useState(window.innerWidth >= 540);
+  const [isMobile, setMobile] = useState(window.innerWidth < 540);
+
+  const updateMedia = () => {
+    setWideDesktop(window.innerWidth >= 1280);
+    setDesktop(window.innerWidth > 1024);
+    setWideTablet(window.innerWidth >= 768);
+    setTablet(window.innerWidth >= 540);
+    setMobile(window.innerWidth < 540);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateMedia);
+    return () => window.removeEventListener("resize", updateMedia);
+  });
 
   const location = useLocation();
-  // Роут всех фильмов и роут сохранённых фильмов для условного рендера элементов
   const moviesRoute = location.pathname === "/movies";
   const savedMoviesRoute = location.pathname === "/saved-movies";
-
-  // Фильмы, которые нужно подгружать в зависимости от ширины экрана
   const [loadingMovies, setLoadingMovies] = useState(0);
-  // Шаг, с которым кнопка "Ещё" подгружает фильмы в зависимоти от ширины экрана
   const [stepLoadingMovies, setStepLoadingMovies] = useState(0);
-  // 1 колонка. slice(0, 5). Шаг 2 фильма. Если остаётся меньше 2 фильмов, скрывать кнопку "Ещё"
-  // 2 колонки. slice(0, 8). Шаг 2 фильма. Если остаётся меньше 2 фильмов, скрывать кнопку "Ещё"
-  // 3 колонки. slice(0, 12). Шаг 3 фильма. Если остаётся меньше 3 фильмов, скрывать кнопку "Ещё"
-  // 4 колонки. slice(0, 16). Шаг 4 фильма. Если остаётся меньше 4 фильмов, скрывать кнопку "Ещё"
 
-  // Сброс подгруженных карт при новом поиске
   useEffect(() => {
     if (isMobile) {
       setLoadingMovies(5);
@@ -45,7 +53,6 @@ const MoviesCardList = ({
     }
   }, [filteredMovies]);
 
-  // Смена шага подгрузки и конца массива фильмов в зависимости от ширины экрана
   useEffect(() => {
     if (isMobile) {
       setLoadingMovies(5);
@@ -65,7 +72,7 @@ const MoviesCardList = ({
     }
   }, [isWideDesktop, isDesktop, isTablet, isMobile]);
 
-  const handleLoadMoreMovies = () => {
+  const handleShowMoreMovies = () => {
     setLoadingMovies(loadingMovies + stepLoadingMovies);
   };
 
@@ -76,7 +83,6 @@ const MoviesCardList = ({
   }, []);
 
   if (moviesRoute) {
-    // Если в сторе есть сохранённые фильмы, то рендерить их или пустую заглушку
     if (JSON.parse(localStorage.getItem("filteredMovies")).length > 0) {
       return (
         <>
@@ -92,9 +98,9 @@ const MoviesCardList = ({
           </ul>
           {loadingMovies < filteredMovies.length && (
             <button
-              className="load-more-btn "
+              className="show-more-btn "
               type="button"
-              onClick={handleLoadMoreMovies}
+              onClick={handleShowMoreMovies}
             >
               Ещё
             </button>
@@ -102,8 +108,6 @@ const MoviesCardList = ({
         </>
       );
     } else {
-      // Если при получении фильмов появилось сообщение об ошибке, выводить текст ошибки (красный) на экран.
-      // Если ошибки нет, но и фильмы не получены, выводить сообщение о "пустом" списке фильмов.
       return (
         <p
           className={`${
@@ -130,8 +134,6 @@ const MoviesCardList = ({
         </ul>
       );
     } else {
-      // Если при получении фильмов появилось сообщение об ошибке, выводить текст ошибки (красный) на экран.
-      // Если ошибки нет, но и фильмы не получены, выводить сообщение о "пустом" списке фильмов.
       return (
         <p
           className={`${

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { useFormAndValidation } from "../../hooks/useFormAndValidation";
+import { useValidation } from "../../hooks/useValidation";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import "./SearchForm.css";
 
@@ -12,11 +12,10 @@ const SearchForm = ({
   handleSavedCheckboxIsActive,
 }) => {
   const { isValid, values, handleChange, errors, setValues } =
-    useFormAndValidation();
+    useValidation();
   const { movie } = values;
 
   const location = useLocation();
-  // const savedMoviesRoute = location.pathname === "/saved-movies";
   const moviesRoute = location.pathname === "/movies";
 
   useEffect(() => {

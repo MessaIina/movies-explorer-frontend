@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { MainContext } from "../../contexts/MainContext";
-import { useAdaptiveRender } from "../../hooks/useAdaptiveRender";
 import "./MoviesCard.css";
 
 const MoviesCard = ({
@@ -11,7 +10,7 @@ const MoviesCard = ({
   handleDeleteSavedMovie,
 }) => {
   const { savedMovies } = useContext(MainContext);
-  const { isMobile } = useAdaptiveRender();
+  const isMobile = window.matchMedia("(min-width: 540px)").matches;
   const location = useLocation();
   const savedMoviesRoute = location.pathname === "/saved-movies";
   const moviesRoute = location.pathname === "/movies";

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { MainContext } from "../../contexts/MainContext";
-import { useFormAndValidation } from "../../hooks/useFormAndValidation";
+import { useValidation } from "../../hooks/useValidation";
 import Header from "../Header/Header";
 import "./Profile.css";
 
@@ -9,7 +9,7 @@ const Profile = ({ handleUpdateUser, onSignOut }) => {
   const currentUser = useContext(CurrentUserContext);
   const { errorMessage } = useContext(MainContext);
   const { values, handleChange, errors, isValid, setValues, resetForm } =
-    useFormAndValidation();
+    useValidation();
   const { name, email } = values;
 
   useEffect(() => {

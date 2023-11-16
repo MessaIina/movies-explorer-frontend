@@ -1,16 +1,14 @@
 import React, { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { MainContext } from "../../contexts/MainContext";
-import { useAdaptiveRender } from "../../hooks/useAdaptiveRender";
 import "./FilterCheckbox.css";
 
 const FilterCheckbox = ({
   handleCheckboxIsActive,
   handleSavedCheckboxIsActive,
 }) => {
-  const { isDesktop } = useAdaptiveRender();
   const { checkboxIsActive, savedCheckboxIsActive } = useContext(MainContext);
-
+  const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
   const location = useLocation();
   const savedMoviesRoute = location.pathname === "/saved-movies";
   const moviesRoute = location.pathname === "/movies";
@@ -38,7 +36,7 @@ const FilterCheckbox = ({
       )}
 
       {savedMoviesRoute && (
-        <label className="checkbox__label button">
+        <label className="checkbox__label btn">
           {!isDesktop && "Короткометражки"}
           <input
             onClick={() => handleSavedCheckboxIsActive(!savedCheckboxIsActive)}

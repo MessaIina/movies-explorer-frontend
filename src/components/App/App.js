@@ -10,13 +10,13 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { MainContext } from "../../contexts/MainContext";
 import { useShortAndSearchedMovies } from "../../hooks/useShortAndSearchedMovies";
 import {
-  authorizeUser,
-  deleteMovie,
-  getSavedMovies,
-  getUser,
   registerUser,
-  saveMovie,
+  authUser,
   updateUser,
+  getUser,
+  getSavedMovies,
+  saveMovie,
+  deleteMovie,
 } from "../../utils/MainApi";
 import { getMovies } from "../../utils/MoviesApi";
 import InfoTooltip from "../InfoTooltip/InfoTooltip";
@@ -38,8 +38,8 @@ const App = () => {
     email: "",
     id: "",
   });
-  const [tooltipStatus, setTooltipStatus] = useState(false);
-  const [isTooltipPopupOpen, setIsTooltipPopupOpen] = useState(false);
+  const [infoTooltipStatus, setInfoTooltipStatus] = useState(false);
+  const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(false);
   const [isLoading, setisLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [movies, setMovies] = useState([]);
@@ -54,7 +54,6 @@ const App = () => {
 
   const currentUrl = location.pathname;
 
-  // Переменные сортированных фильмов
   const shortAndSearchedMovies = useShortAndSearchedMovies(
     movies,
     checkboxIsActive,
@@ -66,7 +65,6 @@ const App = () => {
     searchingSavedMovieName
   );
 
-  // Сохраняю фильмы в стор и стейт после каждого поиска
   useEffect(() => {
     localStorage.setItem(
       "filteredMovies",
@@ -74,16 +72,13 @@ const App = () => {
     );
     setFilteredMovies(shortAndSearchedMovies);
   }, [shortAndSearchedMovies]);
-  // Сохраняю сохранённые фильмы в стейт после каждого поиска
   useEffect(() => {
     setFilteredSavedMovies(shortAndSearchedSavedMovies);
   }, [shortAndSearchedSavedMovies]);
 
-  // Очистка сообщения ошибки при смене роута
   useEffect(() => {
     setErrorMessage("");
   }, [currentUrl]);
-  // Сброс сохранённых фильмов при первой отрисовке (необходим из-за работы хука фильтрации)
   useEffect(() => {
     setFilteredSavedMovies(savedMovies);
   }, []);
@@ -93,9 +88,7 @@ const App = () => {
     setSearchingSavedMovieName("");
   };
 
-  // Основной эффект при загрузке страницы
   useEffect(() => {
-    // Проверка токена и получение информации о пользователе и фильмах
     if (localStorage.getItem("jwt")) {
       const jwt = localStorage.getItem("jwt");
       Promise.all([getUser(jwt), getSavedMovies()])
@@ -106,7 +99,6 @@ const App = () => {
             email: userData.email,
           });
           setSavedMovies(savedMoviesData.movies);
-          // Запись переменных из стора в стейт
           if (localStorage.getItem("movies")) {
             setMovies(JSON.parse(localStorage.getItem("movies")));
           }
@@ -132,8 +124,10 @@ const App = () => {
     }
   }, [loggedIn]);
 
-  // Получение основного списка фильмов
   const handleGetMovies = () => {
+    if (localStorage.getItem("movies")) {
+      setMovies(JSON.parse(localStorage.getItem("movies")));
+    } else {
       setisLoading(true);
       getMovies()
         .then(movies => {
@@ -149,8 +143,9 @@ const App = () => {
         .finally(() => {
           setisLoading(false);
         });
+    }
   };
-  // Сохранение фильма
+
   const handleSaveMovie = movie => {
     saveMovie({
       country: movie.country,
@@ -173,7 +168,7 @@ const App = () => {
         console.log(err);
       });
   };
-  // Удаление фильма на странице всех фильмов
+
   const handleDeleteMovie = movieId => {
     const deletedSavedMovie = savedMovies.find(
       movie => movie.movieId === movieId
@@ -188,7 +183,7 @@ const App = () => {
         console.log(err);
       });
   };
-  // Удаление фильма на странице сохранённых фильмов
+
   const handleDeleteSavedMovie = movieId => {
     deleteMovie(movieId)
       .then(res => {
@@ -199,7 +194,6 @@ const App = () => {
       });
   };
 
-  // Управление чекбоксом -->
   const handleCheckboxIsActive = () => {
     localStorage.setItem("checkboxIsActive", !checkboxIsActive);
     setCheckboxIsActive(checkboxIsActive => !checkboxIsActive);
@@ -215,16 +209,16 @@ const App = () => {
   const handleSearchingSavedMovieName = name => {
     setSearchingSavedMovieName(name.toLowerCase());
   };
-  // <-- Поисковой строкой
 
-  // Авторизация
   const handleLogin = ({ email, password }, resetForm) => {
-    authorizeUser({ email, password })
+    authUser({ email, password })
       .then(res => {
         if (res.token) {
           localStorage.setItem("jwt", res.token);
           setErrorMessage("");
           resetForm();
+          setInfoTooltipStatus(true);
+          setIsInfoToolTipOpen(true);
           setCurrentUser({
             name: res.name,
             email: res.email,
@@ -249,12 +243,12 @@ const App = () => {
         }
       });
   };
-  // Регистрация
   const handleRegister = ({ email, password, name }, resetForm) => {
     registerUser({ email, password, name })
       .then(res => {
-        // Автоматическая авторизация после успешной регистрации
         handleLogin({ email, password }, resetForm);
+        setInfoTooltipStatus(true);
+        setIsInfoToolTipOpen(true);
       })
       .catch(err => {
         if (err === 409) {
@@ -264,7 +258,7 @@ const App = () => {
         }
       });
   };
-  // Выход из аккаунта (очистка стора и стейтов)
+
   const handleSignOut = () => {
     localStorage.removeItem("jwt");
     localStorage.removeItem("movies");
@@ -285,12 +279,10 @@ const App = () => {
     setSearchingMovieName("");
     setErrorMessage("");
     setLoggedIn(false);
-    // Редирект на главную
     navigate("/");
   };
-  // Обновление данных пользователя
+
   const handleUpdateUser = ({ name, email }, resetForm) => {
-    // setisLoading(true);
     updateUser({ name, email })
       .then(res => {
         setErrorMessage("");
@@ -300,19 +292,16 @@ const App = () => {
           email: res.email,
         });
         resetForm();
-        setTooltipStatus(true);
-        setIsTooltipPopupOpen(true);
+        setInfoTooltipStatus(true);
+        setIsInfoToolTipOpen(true);
       })
       .catch(err => {
         setErrorMessage("Пользователь с таким email уже существует.");
       })
-      .finally(() => {
-        // setisLoading(false);
-      });
   };
   //
   const closeAllPopups = () => {
-    setIsTooltipPopupOpen(false);
+    setIsInfoToolTipOpen(false);
   };
 
   return (
@@ -397,9 +386,9 @@ const App = () => {
             <Route path="*" element={<NotFound />}></Route>
           </Routes>
           <InfoTooltip
-            isOpen={isTooltipPopupOpen}
+            isOpen={isInfoToolTipOpen}
             onClose={closeAllPopups}
-            tooltipStatus={tooltipStatus}
+            tooltipStatus={infoTooltipStatus}
           />
         </div>
       </CurrentUserContext.Provider>

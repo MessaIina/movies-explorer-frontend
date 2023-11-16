@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { MainContext } from "../../contexts/MainContext";
-import { useFormAndValidation } from "../../hooks/useFormAndValidation";
+import { useValidation } from "../../hooks/useValidation";
 import LogoIcon from "../../images/logo.svg";
 import "./Register.css";
 
@@ -9,7 +9,7 @@ const Register = ({ handleRegister }) => {
   const { errorMessage } = useContext(MainContext);
 
   const { values, handleChange, errors, isValid, resetForm } =
-    useFormAndValidation();
+    useValidation();
 
   const { name, email, password } = values;
 
