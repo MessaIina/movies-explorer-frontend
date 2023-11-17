@@ -8,7 +8,7 @@ import "./Login.css";
 const Login = ({ handleLogin }) => {
   const { errorMessage } = useContext(MainContext);
   const { values, handleChange, errors, isValid, resetForm } =
-    useValidation();
+  useValidation();
   const { email, password } = values;
 
   const handleSubmit = e => {

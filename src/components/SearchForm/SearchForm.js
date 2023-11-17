@@ -12,7 +12,7 @@ const SearchForm = ({
   handleSavedCheckboxIsActive,
 }) => {
   const { isValid, values, handleChange, errors, setValues } =
-    useValidation();
+  useValidation();
   const { movie } = values;
 
   const location = useLocation();

@@ -77,6 +77,10 @@
     outline: none;
     color: #000;
   }
+  .profile__edit:disabled {
+    color: #c2c2c2;
+    pointer-events: none;
+  }
   .profile__logout {
     box-sizing: border-box;
     border: none;

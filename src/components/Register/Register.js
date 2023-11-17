@@ -9,7 +9,7 @@ const Register = ({ handleRegister }) => {
   const { errorMessage } = useContext(MainContext);
 
   const { values, handleChange, errors, isValid, resetForm } =
-    useValidation();
+  useValidation();
 
   const { name, email, password } = values;
 

@@ -9,7 +9,7 @@ const Profile = ({ handleUpdateUser, onSignOut }) => {
   const currentUser = useContext(CurrentUserContext);
   const { errorMessage } = useContext(MainContext);
   const { values, handleChange, errors, isValid, setValues, resetForm } =
-    useValidation();
+  useValidation();
   const { name, email } = values;
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const Profile = ({ handleUpdateUser, onSignOut }) => {
     });
   }, [currentUser]);
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (isValid && (currentUser.name !== name || currentUser.email !== email)) {
       handleUpdateUser(values, resetForm);
@@ -94,10 +94,7 @@ const Profile = ({ handleUpdateUser, onSignOut }) => {
             <ul className="profile__links">
               <li className="profile__link">
                 <button
-                  disabled={
-                    !isValid ||
-                    (currentUser.name === name && currentUser.email === email)
-                  }
+                  disabled={!isValid || (currentUser.name === name && currentUser.email === email)}
                   type="submit"
                   aria-label="Редактировать профиль"
                   className="profile__edit btn"

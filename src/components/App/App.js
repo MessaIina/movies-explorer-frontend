@@ -298,6 +298,9 @@ const App = () => {
       .catch(err => {
         setErrorMessage("Пользователь с таким email уже существует.");
       })
+      .finally(() => {
+        setisLoading(false);
+      });
   };
   //
   const closeAllPopups = () => {

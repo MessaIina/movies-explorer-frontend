@@ -22,6 +22,7 @@ const FilterCheckbox = ({
             onClick={handleCheckboxIsActive}
             className="checkbox__input"
             type="checkbox"
+            checked={checkboxIsActive}
             placeholder="Фильтр по короткометражкам"
           />
           <span
@@ -39,9 +40,12 @@ const FilterCheckbox = ({
         <label className="checkbox__label btn">
           {!isDesktop && "Короткометражки"}
           <input
-            onClick={() => handleSavedCheckboxIsActive(!savedCheckboxIsActive)}
+            onClick={() =>
+              handleSavedCheckboxIsActive(!savedCheckboxIsActive)
+            }
             className="checkbox__input"
             type="checkbox"
+            checked={savedCheckboxIsActive}
             placeholder="Фильтр по короткометражкам"
           />
           <span
