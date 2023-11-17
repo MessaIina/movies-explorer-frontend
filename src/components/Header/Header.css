@@ -1,0 +1,69 @@
+.header {
+    display: grid;
+    grid-template-columns: 1fr max-content 1fr;
+    grid-template-areas: "logo navtab links";
+    padding: 18px 70px;
+    align-items: center;
+    background-color: #fff;
+  }
+  .header_dark {
+    background-color: #073042;
+  }
+  .header__logo {
+    grid-area: logo;
+    display: block;
+    max-width: 38px;
+  }
+  .header__logo-link {
+    margin-right: auto;
+  }
+  .header__auth-links {
+    grid-area: links;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 30px;
+  }
+  .header__signup {
+    color: #fff;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+  }
+  .header__signin {
+    padding: 8px 20px;
+    background-color: #2be080;
+    border-radius: 3px;
+    color: #000;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+  }
+  .header__profile-btn {
+    margin-left: auto;
+  }
+  
+  @media screen and (max-width: 1024px) {
+    .header {
+      padding: 18px 30px;
+    }
+  }
+  
+  @media screen and (max-width: 540px) {
+    .header {
+      padding: 18px 14px;
+    }
+  
+    .header__auth-links {
+      gap: 15px;
+    }
+    .header__signin {
+      padding: 5px 12px;
+      font-size: 10px;
+      line-height: 16px;
+    }
+    .header__signup {
+      font-size: 10px;
+      line-height: 16px;
+    }
+  }
